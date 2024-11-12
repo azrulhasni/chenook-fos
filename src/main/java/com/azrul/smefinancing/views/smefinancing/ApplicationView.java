@@ -173,11 +173,12 @@ public class ApplicationView extends VerticalLayout implements AfterNavigationOb
                 content.setPadding(false);
                 if (finapp.getApplicationDate() != null) {
                         content.add(
-                                        new NativeLabel(
-                                                        fieldNameDisplayNameMap.get("applicationDate")
-                                                                        + ": "
-                                                                        + dateTimeFormatter.format(
-                                                                                        finapp.getApplicationDate())));
+                            new NativeLabel(
+                                    fieldNameDisplayNameMap.get("applicationDate")
+                                    + ": "
+                                    + dateTimeFormatter.format(finapp.getApplicationDate())
+                            )
+                        );
                 }
                 TextArea reason = new TextArea();
                 reason.setValue(finapp.getReasonForFinancing() != null
