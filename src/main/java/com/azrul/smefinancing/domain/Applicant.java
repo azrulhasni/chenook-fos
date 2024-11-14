@@ -8,7 +8,9 @@ import com.azrul.chenook.annotation.Matcher;
 import com.azrul.chenook.annotation.NotBlankValue;
 import com.azrul.chenook.annotation.NotNullValue;
 import com.azrul.chenook.annotation.WorkField;
+import com.azrul.chenook.domain.Signature;
 import com.azrul.chenook.domain.converter.LocalDateTimeConverter;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -20,6 +22,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -82,6 +85,12 @@ public class Applicant {
     @WorkField(displayName = "Position")
     private ApplicantType type;
     
+    @NotNullValue
+    @WorkField(displayName = "Signature")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "sign_id", referencedColumnName = "id") 
+    private Signature signature;
+    
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "applicant_error_mapping", 
       joinColumns = {@JoinColumn(name = "id", referencedColumnName = "id")})
@@ -112,8 +121,7 @@ public class Applicant {
     @JoinColumn(name = "fk_finApplication")
     private FinApplication finApplication;
     
-//    @OneToMany(mappedBy = "applicant",orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-//    private Set<Attachment> documents = new HashSet<>();
+    
 
     /**
      * @return the id
@@ -365,6 +373,20 @@ public class Applicant {
      */
     public void setErrors(Set<String> errors) {
         this.errors = errors;
+    }
+
+    /**
+     * @return the signature
+     */
+    public Signature getSignature() {
+        return signature;
+    }
+
+    /**
+     * @param signature the signature to set
+     */
+    public void setSignature(Signature signature) {
+        this.signature = signature;
     }
 
   

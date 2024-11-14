@@ -137,9 +137,18 @@ public class ApplicationView extends VerticalLayout implements AfterNavigationOb
                                                                 finapp,
                                                                 oidcUser,
                                                                 "SME_FIN",
-                                                                fa -> myCreatedWorkPanel.refresh(),
-                                                                fa -> myCreatedWorkPanel.refresh(),
-                                                                fa -> myCreatedWorkPanel.refresh());
+                                                                fa -> {
+                                                                    myCreatedWorkPanel.refresh();
+                                                                    myOwnWorkPanel.refresh();
+                                                                },
+                                                                fa -> {
+                                                                    myCreatedWorkPanel.refresh();
+                                                                    myOwnWorkPanel.refresh();
+                                                                },
+                                                                fa -> {
+                                                                    myCreatedWorkPanel.refresh();
+                                                                    myOwnWorkPanel.refresh();
+                                                                });
                                         }
 
                         );

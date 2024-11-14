@@ -26,8 +26,11 @@ xsi:noNamespaceSchemaLocation="workflow.xsd">
             <preRunScript>
                 <![CDATA[
                     import java.time.LocalDateTime;
-                 
+                    import com.azrul.smefinancing.domain.Status;
+                    
+                    current.setStatus(Status.IN_PROGRESS);
                     System.out.println("===PRE RUN SCRIPT==");
+                    
                     //current.setStartTime(LocalDateTime.now());
                 ;]]>
             </preRunScript>
@@ -42,7 +45,9 @@ xsi:noNamespaceSchemaLocation="workflow.xsd">
             <preRunScript>
                 <![CDATA[
                     import java.time.LocalDateTime;
-                 
+                    import com.azrul.smefinancing.domain.Status;
+                    
+                    current.setStatus(Status.IN_PROGRESS);
                     System.out.println("===PRE RUN SCRIPT==");
                     //current.setStartTime(LocalDateTime.now());
                 ;]]>
@@ -120,6 +125,7 @@ xsi:noNamespaceSchemaLocation="workflow.xsd">
             <script>
                 <![CDATA[
                 import com.azrul.chenook.domain.*;
+                import com.azrul.smefinancing.domain.Status;
                 
                 current.setStatus(Status.DENIED);
                 System.out.println("ID:"+current.getId()+" - rejected");
@@ -136,6 +142,7 @@ xsi:noNamespaceSchemaLocation="workflow.xsd">
             <script>
                 <![CDATA[
                 import com.azrul.chenook.domain.*;
+                import com.azrul.smefinancing.domain.Status;
                 
                 current.setStatus(Status.DONE);
                 System.out.println("ID:"+current.getId()+" - approved");

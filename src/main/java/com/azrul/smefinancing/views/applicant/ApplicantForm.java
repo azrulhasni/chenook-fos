@@ -31,14 +31,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 @SpringComponent
 public class ApplicantForm extends Dialog {
 
-   
-    private static final String SIGNATURE_CONTEXT = "SME_FIN";
-    private static final String SIGNATURE_ERROR = "Signature not present";
 
     private final Binder<Applicant> binder = new Binder<>(Applicant.class);
     private final ApplicantService applicantService;
     private final WorkflowConfig workflowConfig;
-    private       SignaturePanel signPanel;
 
     
     public static ApplicantForm create(Applicant applicant,
@@ -77,12 +73,12 @@ public class ApplicantForm extends Dialog {
        BizProcess bizProcess = workflowConfig.rootBizProcess();
        //WorkflowAwareGroup group = WorkflowAwareGroup.create(user, finapp, bizProcess);
 
-       this.signPanel=SignaturePanel.create(group);
+       
 
         // Initialize applicant and signature panel
         if (applicant != null) {
             binder.setBean(applicant);
-            signPanel.setParentAndContext(applicant.getId(), SIGNATURE_CONTEXT);
+            //signPanel.setParentAndContext(applicant.getId(), SIGNATURE_CONTEXT);
         } else {
             binder.setBean(new Applicant());
         }
@@ -113,7 +109,10 @@ public class ApplicantForm extends Dialog {
         ComboBox<ApplicantType> cbType = WorkflowAwareComboBox.create("type", binder, Set.of(ApplicantType.values()), group);
         form.add(cbType);
         
-        this.add(form, signPanel);
+        SignaturePanel<Applicant> signPanel=SignaturePanel.create("signature", binder, group);
+        form.add(signPanel);
+        
+        this.add(form);
 
         // Save button and its logic
         Button btnSave = new Button("Save", e -> {
@@ -135,7 +134,6 @@ public class ApplicantForm extends Dialog {
         applicant.setErrors(errors);
         if (errors.isEmpty()) {
             applicantService.save(applicant, finapp);
-            signPanel.save(applicant.getId(), SIGNATURE_CONTEXT);
             onPostSave.accept(applicant);
             this.close();
         }
@@ -144,7 +142,7 @@ public class ApplicantForm extends Dialog {
     private void saveDraftApplicant(FinApplication finapp, Consumer<Applicant> onPostSave) {
         Applicant applicant = binder.getBean();
         applicantService.save(applicant, finapp);
-        signPanel.save(applicant.getId(), SIGNATURE_CONTEXT);
+        //signPanel.save(applicant.getId(), SIGNATURE_CONTEXT);
         onPostSave.accept(applicant);
         this.close();
     }
@@ -154,9 +152,9 @@ public class ApplicantForm extends Dialog {
         for (ValidationResult err : binder.validate().getValidationErrors()) {
             errors.add(err.getErrorMessage());
         }
-        if (!signPanel.isSignaturePresent()) {
-            errors.add(SIGNATURE_ERROR);
-        }
+//        if (!signPanel.isSignaturePresent()) {
+//            errors.add(SIGNATURE_ERROR);
+//        }
         return errors;
     }
 }
