@@ -1,0 +1,2 @@
+11457
+/Library/Java/JavaVirtualMachines/jdk-17.0.4.jdk/Contents/Home/bin/java -classpath /Users/azrul/.mvn/wrapper/maven-wrapper.jar -Dmaven.home=/Users/azrul/Documents/GitHub -Dmaven.multiModuleProjectDirectory=/Users/azrul org.apache.maven.wrapper.MavenWrapperMain -Dmaven.ext.class.path=/Applications/NetBeans/Apache NetBeans 13.app/Contents/Resources/NetBeans/netbeans/java/maven-nblib/netbeans-eventspy.jar clean install
