@@ -40,6 +40,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.azrul.chenook.annotation.NumberRange;
 import com.azrul.chenook.annotation.SingleValue;
+import com.azrul.chenook.domain.Attachment;
 import com.azrul.chenook.domain.converter.LocalDateTimeConverter;
 import com.azrul.chenook.domain.converter.MoneyConverter;
 import java.text.NumberFormat;
@@ -129,9 +130,13 @@ public class FinApplication extends WorkItem {
     @WorkField(displayName = "Site Visit Report")
     private String siteVisitReport;
 
-
     @OneToMany(mappedBy = "finApplication", orphanRemoval = true, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Set<Applicant> applicants = new HashSet<>();
+    
+    @WorkField(displayName = "Attachments")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "finapp_id")
+    private Set<Attachment> attachments = new HashSet<>();
 
     @Transient
     @Audited(withModifiedFlag = true)
@@ -493,5 +498,19 @@ public class FinApplication extends WorkItem {
 
     public Set<Location> getLocation() {
         return location;
+    }
+
+    /**
+     * @return the attachments
+     */
+    public Set<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    /**
+     * @param attachments the attachments to set
+     */
+    public void setAttachments(Set<Attachment> attachments) {
+        this.attachments = attachments;
     }
 }

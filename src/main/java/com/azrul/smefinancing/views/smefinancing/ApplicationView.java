@@ -89,7 +89,10 @@ public class ApplicationView extends VerticalLayout implements AfterNavigationOb
                                                                 fa -> wp.refresh(),
                                                                 fa -> wp.refresh());
                                         },
-                                        finapp -> createCard(finapp, fieldNameDisplayNameMap, dateTimeFormatter));
+                                        finapp -> createCard(finapp, fieldNameDisplayNameMap, dateTimeFormatter)
+                        );
+                        
+                        
                         var myCreatedWorkPanel = MyCreatedWorkPanel.create(
                                         FinApplication.class,
                                         oidcUser,
@@ -103,7 +106,10 @@ public class ApplicationView extends VerticalLayout implements AfterNavigationOb
                                                                 fa -> wp.refresh(),
                                                                 fa -> wp.refresh());
                                         },
-                                        finapp -> createCard(finapp, fieldNameDisplayNameMap, dateTimeFormatter));
+                                        finapp -> createCard(finapp, fieldNameDisplayNameMap, dateTimeFormatter)
+                        );
+                        
+                        
                         var worklistPanel = WorklistPanel.create(
                                         FinApplication.class,
                                         oidcUser,
@@ -117,7 +123,8 @@ public class ApplicationView extends VerticalLayout implements AfterNavigationOb
                                                                 fa -> wp.refresh(),
                                                                 fa -> wp.refresh());
                                         },
-                                        finapp -> createCard(finapp, fieldNameDisplayNameMap, dateTimeFormatter));
+                                        finapp -> createCard(finapp, fieldNameDisplayNameMap, dateTimeFormatter)
+                        );
 
                         var workflowCreatePanel = WorkflowCreatePanel.create(
                                         FinApplication.class,

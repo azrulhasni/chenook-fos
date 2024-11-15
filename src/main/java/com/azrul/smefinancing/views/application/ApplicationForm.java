@@ -225,25 +225,21 @@ public class ApplicationForm extends Dialog {
         form.add(workflowPanel);
 
         var attachmentsPanel = AttachmentsPanel.create(
-                work.getId(),
-                "SME_FIN",
-                Long.toString(work.getId()),
+                "attachments",
+                binder,
                 typicalGroup,
-                a -> {},
-                a -> {});
+                work.getId().toString());
+        form.add(attachmentsPanel);
 
         this.add(msgBtn);
         this.add(form);
         
-        this.add(attachmentsPanel);
 
         VerticalLayout applicantPanel = createApplicantPanel(
                 work,
                 user,
                 binder,
-                typicalGroup,
-                valuationGroup,
-                underwritingGroup
+                typicalGroup
         );
 
         this.add(applicantPanel);
@@ -304,9 +300,7 @@ public class ApplicationForm extends Dialog {
             FinApplication finapp,
             OidcUser user,
             Binder<FinApplication> binder,
-            WorkflowAwareGroup typicalGroup,
-            WorkflowAwareGroup valuationGroup,
-            WorkflowAwareGroup underwritingGroup
+            WorkflowAwareGroup typicalGroup
     ) {
         Grid<Applicant> gridApplicants = createApplicantGrid(finapp, user, binder, typicalGroup);
        
@@ -462,13 +456,6 @@ public class ApplicationForm extends Dialog {
                 if (finapp.getStatus() == Status.NEWLY_CREATED) {
                     finapp.setStatus(Status.DRAFT);
                 }
-                /*Optional<Approval> oapproval = finapp.getApprovals().stream().filter(a -> StringUtils.equals(user.getPreferredUsername(), a.getUsername())).findAny();
-                oapproval.ifPresent(approval -> {
-                    approval.setApprovalDateTime(LocalDateTime.now());
-                    approval.setApproved(workflowPanel.getApproval());
-                    approval.setNote(workflowPanel.getApprovalNote());
-                });*/
-                //finappService.save(finapp);
                 finappService.run(finapp,
                         user.getPreferredUsername(),
                         workflowConfig.rootBizProcess(),
@@ -546,9 +533,6 @@ public class ApplicationForm extends Dialog {
         if (applicantService.countApplicants(finapp) <= 0) {
             errors.add("No applicant");
         }
-        /*if (workflowPanel.validate() == false) {
-            errors.add("Approval not set");
-        }*/
         applicantService.getApplicants(finapp).forEach(applicant -> {
             for (String err : applicant.getErrors()) {
                 errors.add("[" + applicant.getFullName() + "] " + err);

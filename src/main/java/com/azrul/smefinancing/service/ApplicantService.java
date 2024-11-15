@@ -4,7 +4,6 @@
  */
 package com.azrul.smefinancing.service;
 
-import com.azrul.chenook.domain.Attachment;
 import com.azrul.smefinancing.domain.Applicant;
 import com.azrul.smefinancing.domain.FinApplication;
 import com.azrul.smefinancing.repository.ApplicantRepository;
@@ -13,7 +12,6 @@ import com.vaadin.flow.data.provider.CallbackDataProvider;
 import com.vaadin.flow.data.provider.QuerySortOrder;
 import com.vaadin.flow.data.provider.SortDirection;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
